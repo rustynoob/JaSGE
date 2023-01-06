@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Level Editor</title>
+    <link rel="stylesheet" href="levelEditor.css">
+  </head>
+  <body>
+    <h1>Level Editor</h1>
+    <div id="sidebar">
+    <h2>Entities</h2>
+    <button class="add-button">+</button>
+    <button class="refresh-button">Refresh</button>
+    <button class="remove-button">-</button>
+    <ul id="entity-list">
+      <!-- List of entities goes here -->
+    </ul>
+    <h2>Components</h2>
+    <button class="add-button">+</button>
+    <button class="refresh-button">Refresh</button>
+    <button class="remove-button">-</button>
+
+    <ul id="component-list">
+      <!-- List of components goes here -->
+    </ul>
+    <h2>Properties</h2>
+    <form id="property-form">
+      <!-- Form for editing properties goes here -->
+    </form>
+  </div>
+  <div id="game-canvas-container">
+    <canvas id="game-canvas"></canvas>
+    <div id="controls">
+      <button id="play-button">Play</button>
+      <button id="pause-button">Pause</button>
+      <button id="restart-button">Restart</button>
+    </div>
+  </div>
+
+  </body>
+</html>
+<script>
+
+function getEntities(){
+  for (const entity of level.entities) {
+    const li = document.createElement("li");
+    li.textContent = entity.name;
+    li.addEventListener("click", () => {
+      // Select the entity and show its components
+    });
+    entityList.appendChild(li);
+  }
+}getEntities();
+
+function getComponents(){
+  const entity = getSelectedEntity();
+  for (const component of entity.components) {
+    const li = document.createElement("li");
+    li.textContent = component.type;
+    li.addEventListener("click", () => {
+    // Select the component and show its properties
+    });
+    componentList.appendChild(li);
+  }
+} getComponents();
+
+function getProperties(){
+  const component = getSelectedComponent();
+  for (const [key, value] of Object.entries(component)) {
+    const label = document.createElement("label");
+    label.textContent = key;
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = value;
+    propertyForm.appendChild(label);
+    propertyForm.appendChild(input);
+  }
+} getProperties();
+
+playButton.addEventListener("click", () => {
+  game.play();
+});
+pauseButton.addEventListener("click", () => {
+  game.pause();
+});
+restartButton.addEventListener("click", () => {
+  game.restart();
+});
+
+
+</script>
